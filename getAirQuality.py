@@ -33,8 +33,12 @@ for id in id_arry:
     response = requests.request("GET", url)
     json_data = json.loads(response.text)
 
-    print("Got this data back:")
-    print(json_data["results"][0])
+    #print("Got this data back:")
+    stats=json.loads(json_data["results"][0]["Stats"])
+    del json_data["results"][0]["Stats"]
+    metadata=json_data["results"][0]
+    merged_dict = {**metadata, **stats}
+    #print(merged_dict)
 
     #--------------------------------------------------------
     #post data to influxdb
@@ -45,9 +49,9 @@ for id in id_arry:
             "tags": {
                 "id": id,
                 #"timezone":json_data["timezone"],
-                "label":json_data["results"][0]["Label"]
+                "label":merged_dict["Label"]
             },
-            "fields": json_data["results"][0]
+            "fields": merged_dict
         }
     ]
 
