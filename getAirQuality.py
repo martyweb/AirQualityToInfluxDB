@@ -41,7 +41,6 @@ for id in id_arry:
     #remove all stats nodes b/c it was causing problems
     temp_data=[]
     for data in json_data["sensor"]:
-        print(data)
         if "stats" in data:
             temp_data.append(data)
     for remove in temp_data:
