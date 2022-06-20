@@ -10,7 +10,6 @@ import argparse
 from influxdb import InfluxDBClient
 from influxdb.client import InfluxDBClientError
 
-
 #pull data from config file
 parser = argparse.ArgumentParser(description='Gimme')
 parser.add_argument('-s', '--influxdbhost', required=True, help='Influxdb host')
@@ -23,10 +22,6 @@ parser.add_argument('-k', '--key', required=True, help='PurpleAir.com API Key')
 args = parser.parse_args()
 
 key=args.key
-
-#--------------------------------------------------------
-#Get weather information from openweather
-#--------------------------------------------------------
 ids = args.ids
 id_arry=ids.split()
 
@@ -71,7 +66,3 @@ for id in id_arry:
             
     except InfluxDBClientError as e:
             print("Influxdb Error: ", e.content)
-
-
-
-
