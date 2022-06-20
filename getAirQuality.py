@@ -2,6 +2,7 @@
 #Grabs data from purpleair.com and stores it in an InfluxDB
 #
 #--------------------------------------------------------
+from operator import contains
 import requests
 import json
 import os
@@ -37,14 +38,14 @@ for id in id_arry:
     response = requests.request("GET", url, headers=headers)
     json_data = json.loads(response.text)
 
-    #print("Got this data back:")
-    # stats=json_data["sensor"]["stats"]
-    del json_data["sensor"]["stats"]
-    del json_data["sensor"]["stats_a"]
-    del json_data["sensor"]["stats_b"]
-    # metadata=json_data["sensor"]
-    # merged_dict = {**metadata, **stats}
-    #print(merged_dict)
+    #remove all stats nodes b/c it was causing problems
+    temp_data=[]
+    for data in json_data["sensor"]:
+        print(data)
+        if "stats" in data:
+            temp_data.append(data)
+    for remove in temp_data:
+        del json_data["sensor"][remove]
 
     #--------------------------------------------------------
     #post data to influxdb
