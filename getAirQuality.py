@@ -39,7 +39,9 @@ for id in id_arry:
 
     #print("Got this data back:")
     # stats=json_data["sensor"]["stats"]
-    # del json_data["sensor"]["stats"]
+    del json_data["sensor"]["stats"]
+    del json_data["sensor"]["stats_a"]
+    del json_data["sensor"]["stats_b"]
     # metadata=json_data["sensor"]
     # merged_dict = {**metadata, **stats}
     #print(merged_dict)
@@ -68,7 +70,7 @@ for id in id_arry:
             exit(0)
             
     except InfluxDBClientError as e:
-            print(e.content)
+            print("Influxdb Error: ", e.content)
 
 
 
