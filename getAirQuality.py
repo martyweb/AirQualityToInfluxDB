@@ -18,7 +18,10 @@ parser.add_argument('-u', '--influxdbusername', required=True, help='Influxdb us
 parser.add_argument('-p', '--influxdbpass', required=True, help='Influxdb pass')
 parser.add_argument('-d', '--influxdbdatabase', default="airquality", help='Influxdb database name')
 parser.add_argument('-i', '--ids', required=True, help='PurpleAir.com IDs')
+parser.add_argument('-k', '--key', required=True, help='PurpleAir.com API Key')
 args = parser.parse_args()
+
+key=args.key
 
 #--------------------------------------------------------
 #Get weather information from openweather
@@ -29,15 +32,16 @@ id_arry=ids.split()
 for id in id_arry:
     print("Getting id " + id)
 
-    url = "https://www.purpleair.com/json?show="+id
-    response = requests.request("GET", url)
+    url = "https://api.purpleair.com/v1/sensors/"+id
+    headers = { 'X-API-Key' : key}
+    response = requests.request("GET", url, headers=headers)
     json_data = json.loads(response.text)
 
     #print("Got this data back:")
-    stats=json.loads(json_data["results"][0]["Stats"])
-    del json_data["results"][0]["Stats"]
-    metadata=json_data["results"][0]
-    merged_dict = {**metadata, **stats}
+    # stats=json_data["sensor"]["stats"]
+    # del json_data["sensor"]["stats"]
+    # metadata=json_data["sensor"]
+    # merged_dict = {**metadata, **stats}
     #print(merged_dict)
 
     #--------------------------------------------------------
@@ -49,9 +53,9 @@ for id in id_arry:
             "tags": {
                 "id": id,
                 #"timezone":json_data["timezone"],
-                "label":merged_dict["Label"]
+                "label":json_data["sensor"]["name"]
             },
-            "fields": merged_dict
+            "fields": json_data["sensor"]
         }
     ]
 
