@@ -17,7 +17,7 @@ parser.add_argument('-P', '--influxdbport', default=8086, help='Influxdb port')
 parser.add_argument('-u', '--influxdbusername', required=True, help='Influxdb username')
 parser.add_argument('-p', '--influxdbpass', required=True, help='Influxdb pass')
 parser.add_argument('-d', '--influxdbdatabase', default="airquality", help='Influxdb database name')
-parser.add_argument('-i', '--ids', required=True, help='PurpleAir.com IDs')
+parser.add_argument('-i', '--ids', help='PurpleAir.com IDs')
 parser.add_argument('-k', '--key', required=True, help='PurpleAir.com API Key')
 args = parser.parse_args()
 
