@@ -1,0 +1,3 @@
+# run cron.sh every day at 9:30AM
+* * * * * python ./getAirQuality.py --influxdbhost $influxdbhost --influxdbport $influxdbport --influxdbusername $influxdbusername --influxdbdatabase $influxdbdatabase --influxdbpass $influxdbpass -k $key_purpleair -i $purpleairIDs
+* * * * * python ./getPollution.py --influxdbhost $influxdbhost --influxdbport $influxdbport --influxdbusername $influxdbusername --influxdbdatabase $influxdbdatabase --influxdbpass $influxdbpass -k $key_openweather -z $zip 
