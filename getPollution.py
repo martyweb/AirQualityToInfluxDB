@@ -43,7 +43,7 @@ json_body = [
             #"timezone":json_data["timezone"],
             #"label": json_data["list"][0]['components']
         },
-        "fields": json_data["list"][0]['components']
+        "fields": {**json_data["list"][0]['components'], **json_data["list"][0]['main']}
     }
 ]
 
